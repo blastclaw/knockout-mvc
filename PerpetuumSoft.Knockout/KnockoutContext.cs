@@ -95,6 +95,11 @@ namespace PerpetuumSoft.Knockout
     {
       var sb = new StringBuilder();
 
+      if (!isInitialized)
+      {
+        sb.Append(GetInitializeData(model, false));
+      }
+
       sb.AppendLine(@"<script type=""text/javascript""> ");
       sb.Append("$(document).ready(function() {");
 
@@ -102,11 +107,11 @@ namespace PerpetuumSoft.Knockout
 
       string mappingData = KnockoutJsModelBuilder.CreateMappingData<TModel>();
       if (mappingData == "{}")
-        sb.AppendLine(string.Format("var {0} = ko.mapping.fromJS(data); ", ViewModelName));
+        sb.AppendLine(string.Format("{0} = ko.mapping.fromJS(data); ", ViewModelName));
       else
       {
-        sb.AppendLine(string.Format("var {0}MappingData = {1};", ViewModelName, mappingData));
-        sb.AppendLine(string.Format("var {0} = ko.mapping.fromJS(data, {0}MappingData); ", ViewModelName));
+        sb.AppendLine(string.Format("{0}MappingData = {1};", ViewModelName, mappingData));
+        sb.AppendLine(string.Format("{0} = ko.mapping.fromJS(data, {0}MappingData); ", ViewModelName));
       }
       sb.Append(KnockoutJsModelBuilder.AddComputedToModel(model, ViewModelName));
       sb.AppendLine(string.Format("ko.applyBindings({0});", ViewModelName));
