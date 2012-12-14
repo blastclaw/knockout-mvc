@@ -81,6 +81,12 @@ namespace PerpetuumSoft.Knockout.Tests
       RunTest((Expression<Func<TestModel, bool>>)(model => !model.Bool), "!Bool()");
     }
 
+    [TestMethod]
+    public void CommonTest07()
+    {
+      RunTest((Expression<Func<TestModel, TestModel>>)(model => model), "$data");
+    }
+
     // Length
     [TestMethod]
     public void LengthTest01()
